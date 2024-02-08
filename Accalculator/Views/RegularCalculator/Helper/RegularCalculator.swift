@@ -11,13 +11,6 @@ struct RegularCalculator: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    let grid = [
-        ["AC", "⌦", "%", "÷"],
-        ["7", "8", "9", "×"],
-        ["4", "5", "6", "-"],
-        ["1", "2", "3", "+"],
-        ["()", "0", ".", "="]
-    ]
     
     let landscapeGrids = [
         ["x^2", "x^3", "AC", "⌦", "%", "÷"],
@@ -37,110 +30,29 @@ struct RegularCalculator: View {
         Group {
             if horizontalSizeClass == .compact && verticalSizeClass == .regular {
                 // Portrait orientation layout
-                portraitLayout
+                PortraitLayout(
+                    visibleWorkings: visibleWorkings,
+                    visibleResults: visibleResults,
+                    buttonPressed: buttonPressed
+                )
             } else {
                 // Landscape orientation layout
-                landscapeLayout
+                LandscapeLayout(
+                    visibleWorkings: visibleWorkings,
+                    visibleResults: visibleResults,
+                    buttonPressed: buttonPressed
+                )
             }
         }
         .background(Color(UIColor.systemBackground).ignoresSafeArea())
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Invalid Input"),
-                message: Text(visibleWorkings),
+                message: Text(displayWorkings(workings: visibleWorkings)),
                 dismissButton: .default(Text("Okay"))
             )
         }
-    }
-    
-    private var portraitLayout: some View {
-        VStack(spacing: 0) {
-            // current expression
-            HStack {
-                Spacer()
-                Text(visibleWorkings.isEmpty ? "0" : visibleWorkings.replacingOccurrences(of: " ", with: ""))
-                    .padding()
-                    .foregroundColor(Color(UIColor.label))
-                    .font(.system(size: 30, weight: .heavy))
-            }.frame(maxWidth: .infinity, maxHeight: .infinity).fixedSize(horizontal: false, vertical: true)
-            // current result
-            HStack {
-                Spacer()
-                Text(visibleResults.isEmpty ? "0" : visibleResults)
-                    .padding()
-                    .foregroundColor(Color(UIColor.label))
-                    .font(.system(size: 50, weight: .medium))
-            }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            // calculator pads
-            Spacer()
-            Spacer()
-            ForEach(grid, id: \.self) { row in
-                HStack {
-                    ForEach(row, id: \.self)  {cell in
-                        Button(action: {buttonPressed(cell: cell)}, label: {
-                            Text(cell == "AC" ? (visibleWorkings.isEmpty ? cell : "C") : cell)
-                                .foregroundColor(buttonTextColor(cell))
-                                .font(.system(size: 40, weight: .medium))
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        })
-                        .background(buttonColor(cell))
-                        .cornerRadius(buttonCornerRadius)
-                        .padding(.vertical, 7)
-                    }
-                }
-                .padding(.horizontal, 10)
-            }
-        }
-    }
-    
-    // Assuming "Width" to be sufficient to accommodate the longest text
-    // You might need to adjust this based on your font size and content
-    let buttonWidth: CGFloat = 60
-    let buttonHeight: CGFloat = 50
-    let buttonCornerRadius: CGFloat = 20 // Half of width or height for a circle
-    
-    private var landscapeLayout: some View {
-        HStack(spacing: 0) {
-            VStack {
-                // current expression
-                HStack {
-                    Spacer()
-                    Text(visibleWorkings.isEmpty ? "0" : displayInput())
-                        .padding()
-                        .foregroundColor(Color(UIColor.label))
-                        .font(.system(size: 30, weight: .heavy))
-                }.frame(maxWidth: .infinity, maxHeight: .infinity).fixedSize(horizontal: false, vertical: true)
-                // current result
-                HStack {
-                    Spacer()
-                    Text(visibleResults.isEmpty ? "0" : visibleResults)
-                        .padding()
-                        .foregroundColor(Color(UIColor.label))
-                        .font(.system(size: 50, weight: .medium))
-                }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            // calculator pads
-            Spacer()
-            VStack {
-                ForEach(landscapeGrids, id: \.self) { row in
-                    HStack {
-                        ForEach(row, id: \.self)  {cell in
-                            Button(action: {buttonPressed(cell: cell)}, label: {
-                                buttonCellText(cell: cell)
-                                    .foregroundColor(buttonTextColor(cell))
-                                    .font(.system(size: 22, weight: .medium))
-                                    .frame(width: buttonWidth, height: buttonHeight)
-                                    .background(buttonColor(cell))
-                            })
-                            .background(buttonColor(cell))
-                            .cornerRadius(buttonCornerRadius)
-                        }
-                    }
-                }
-                
-            }
-        }
-    }
+    }   
     
     func buttonPressed(cell: String) {
         if operators.contains(cell) {
@@ -260,71 +172,16 @@ struct RegularCalculator: View {
         showAlert = true
     }
     
-    func buttonTextColor(_ cell: String) -> Color {
-        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%" || cell == "=" ) {
-            return Color(UIColor.darkText)
-        }
-        
-        return Color(UIColor.label)
-    }
-    
-    func buttonColor(_ cell: String) -> Color {
-        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%" || cell == "=" ) {
-            return .orange
-        }
-        
-        return Color(UIColor.secondarySystemBackground)
-    }
-    
-    func displayInput() -> String {
-        let workings = visibleWorkings
-            .replacingOccurrences(of: " ", with: "")
-            .replacingOccurrences(of: "exp", with: "e**")
-            .replacingOccurrences(of: "sqrt", with: "√");
-        return workings
-    }
-    
-    // Example function for demonstration
-    func buttonCellText(cell: String) -> some View {
-        let exponents = ["x^2", "x^3", "x^y", "e^x"]
-        
-        if exponents.contains(cell) {
-            // Handle exponent cases
-            if cell == "x^2" {
-                return AnyView(Text("x²"))
-            } else if cell == "x^3" {
-                return AnyView(Text("x³"))
-            } else if cell == "x^y" {
-                // Dynamic exponent, assuming y is provided
-                return AnyView(HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("x")
-                    Text("y")
-                        .font(.footnote)
-                        .baselineOffset(8)
-                })
-            } else if cell == "e^x" {
-                return AnyView(HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("e")
-                    Text("x")
-                        .font(.footnote)
-                        .baselineOffset(8)
-                })
-            }
-        } else if cell == "sqrt" {
-            // Handle AC or C based on `visibleWorkings`
-            return AnyView(Text("√(x)"))
-        } else if cell == "AC" {
-            // Handle AC or C based on `visibleWorkings`
-            return AnyView(Text(visibleWorkings.isEmpty ? "AC" : "C")) // Example color
-        }
-        return AnyView(Text(cell))
-    }
-    
     func validInput() -> Bool {
         if visibleWorkings.isEmpty {
             return false
         }
         let workings = ensureFloatingPoint(workings: visibleWorkings)
+            .replacingOccurrences(of: " ", with: "")
+        
+        if workings.last == "." {
+            return false
+        }
         
         let openBrackets = workings.filter { $0 == "(" }.count
         let closeBrackets = workings.filter { $0 == ")" }.count
@@ -342,14 +199,13 @@ struct RegularCalculator: View {
                     foundInvalidSequence = true
                     break
                 }
-                if prev == "(" && (character == ")" || operators.contains(String(character))) {
+                if (prev == "(" && (character == ")" || operators.contains(String(character)))) ||
+                 (prev == ")" && character.isNumber) ||
+                    (prev == "." && !character.isNumber) {
                     foundInvalidSequence = true
                     break
                 }
-                if prev == ")" && character.isNumber {
-                    foundInvalidSequence = true
-                    break
-                }
+                
             }
             previousCharacter = character
         }

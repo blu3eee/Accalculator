@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3C6F5F202B742707009B2C45 /* ConversionRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6F5F1F2B742707009B2C45 /* ConversionRates.swift */; };
+		3C8F76DC2B755EA5000EE212 /* PortraitLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F76DB2B755EA5000EE212 /* PortraitLayout.swift */; };
+		3C8F76E12B755F3C000EE212 /* PadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F76E02B755F3C000EE212 /* PadButton.swift */; };
+		3C8F76E32B75850C000EE212 /* LandscapeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F76E22B75850C000EE212 /* LandscapeLayout.swift */; };
+		3C8F76E62B75857E000EE212 /* Layouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F76E52B75857E000EE212 /* Layouts.swift */; };
 		3CE7928F2B736004000C55F8 /* AccalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7928E2B736004000C55F8 /* AccalculatorApp.swift */; };
 		3CE792912B736004000C55F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE792902B736004000C55F8 /* ContentView.swift */; };
 		3CE792952B736006000C55F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CE792942B736006000C55F8 /* Assets.xcassets */; };
@@ -41,6 +45,10 @@
 
 /* Begin PBXFileReference section */
 		3C6F5F1F2B742707009B2C45 /* ConversionRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionRates.swift; sourceTree = "<group>"; };
+		3C8F76DB2B755EA5000EE212 /* PortraitLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitLayout.swift; sourceTree = "<group>"; };
+		3C8F76E02B755F3C000EE212 /* PadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadButton.swift; sourceTree = "<group>"; };
+		3C8F76E22B75850C000EE212 /* LandscapeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeLayout.swift; sourceTree = "<group>"; };
+		3C8F76E52B75857E000EE212 /* Layouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layouts.swift; sourceTree = "<group>"; };
 		3CE7928B2B736004000C55F8 /* Accalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE7928E2B736004000C55F8 /* AccalculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccalculatorApp.swift; sourceTree = "<group>"; };
 		3CE792902B736004000C55F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,6 +91,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C8F76DA2B755E84000EE212 /* RegularCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				3C8F76E42B75856B000EE212 /* Helper */,
+				3C8F76E52B75857E000EE212 /* Layouts.swift */,
+				3C8F76E22B75850C000EE212 /* LandscapeLayout.swift */,
+			);
+			path = RegularCalculator;
+			sourceTree = "<group>";
+		};
+		3C8F76E42B75856B000EE212 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				3C8F76DB2B755EA5000EE212 /* PortraitLayout.swift */,
+				3C8F76E02B755F3C000EE212 /* PadButton.swift */,
+				3CE792BF2B737258000C55F8 /* RegularCalculator.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		3CE792822B736004000C55F8 = {
 			isa = PBXGroup;
 			children = (
@@ -144,8 +172,8 @@
 		3CE792BA2B736034000C55F8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3C8F76DA2B755E84000EE212 /* RegularCalculator */,
 				3CE792902B736004000C55F8 /* ContentView.swift */,
-				3CE792BF2B737258000C55F8 /* RegularCalculator.swift */,
 				3CE792C32B7373D2000C55F8 /* TipsCalculator.swift */,
 				3CE792C12B7373C3000C55F8 /* ConvertCalculator.swift */,
 			);
@@ -302,9 +330,13 @@
 				3CE792BE2B737229000C55F8 /* CalculatorType.swift in Sources */,
 				3CE792912B736004000C55F8 /* ContentView.swift in Sources */,
 				3CE792C02B737258000C55F8 /* RegularCalculator.swift in Sources */,
+				3C8F76E32B75850C000EE212 /* LandscapeLayout.swift in Sources */,
 				3CE792C22B7373C3000C55F8 /* ConvertCalculator.swift in Sources */,
 				3CE792C62B737496000C55F8 /* ConversionType.swift in Sources */,
+				3C8F76E12B755F3C000EE212 /* PadButton.swift in Sources */,
 				3C6F5F202B742707009B2C45 /* ConversionRates.swift in Sources */,
+				3C8F76DC2B755EA5000EE212 /* PortraitLayout.swift in Sources */,
+				3C8F76E62B75857E000EE212 /* Layouts.swift in Sources */,
 				3CE7928F2B736004000C55F8 /* AccalculatorApp.swift in Sources */,
 				3CE792C42B7373D2000C55F8 /* TipsCalculator.swift in Sources */,
 			);
