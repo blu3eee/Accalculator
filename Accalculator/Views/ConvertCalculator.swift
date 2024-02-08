@@ -36,8 +36,6 @@ struct ConvertCalculator: View {
                 .pickerStyle(MenuPickerStyle())
                 .frame(maxWidth: .infinity)
                 
-                Spacer() // This pushes the button towards the center
-                
                 // Button for swapping units in the middle
                 Button(action: {
                     swap(&inputUnit, &outputUnit)
@@ -45,8 +43,6 @@ struct ConvertCalculator: View {
                     Image(systemName: "arrow.left.arrow.right")// Using a system image for better visual
                         .clipShape(Circle()) // Makes the button circular
                 }
-                
-                Spacer() // This pushes the next picker towards the right
                 
                 // Picker for the output unit on the right
                 Picker("Output Unit", selection: $outputUnit) {
@@ -57,6 +53,7 @@ struct ConvertCalculator: View {
                 .onChange(of: outputUnit, {updateConversion()})
                 .pickerStyle(MenuPickerStyle())
                 .frame(maxWidth: .infinity)
+                
             }
             .padding()
             
@@ -98,12 +95,8 @@ struct ConvertCalculator: View {
     }
     
     func updateConversion() {
-        guard let _value = Double(inputValue) else {
-            if !inputValue.isEmpty {
-                outputValue = "Invalid"
-            } else {
-                outputValue = ""
-            }
+        guard Double(inputValue) != nil else {
+            outputValue = inputValue.isEmpty ? "" : "Invalid"
             return
         }
         
