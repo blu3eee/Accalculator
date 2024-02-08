@@ -72,6 +72,7 @@ struct ConvertCalculator: View {
                 Spacer()
                 Text("\(outputValue)").frame(maxWidth: .infinity)
             }
+            Spacer()
         }
         .padding()
     }
