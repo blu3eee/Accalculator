@@ -12,24 +12,24 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            // Menu selector
             Picker("Calculator", selection: $selectedCalculator) {
-                ForEach(CalculatorType.allCases) { type in
+                ForEach(CalculatorType.allCases, id: \.self) { type in
                     Text(type.rawValue).tag(type)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
-            
-            // Display the selected calculator
-            switch selectedCalculator {
-            case .regular:
+
+            TabView(selection: $selectedCalculator) {
                 RegularCalculator()
-            case .conversion:
+                    .tag(CalculatorType.regular)
                 ConvertCalculator()
-            case .tips:
+                    .tag(CalculatorType.conversion)
                 TipsCalculator()
+                    .tag(CalculatorType.tips)
             }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            
             
             Spacer()
         }
