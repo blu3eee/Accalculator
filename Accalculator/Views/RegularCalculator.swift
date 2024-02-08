@@ -84,7 +84,8 @@ struct RegularCalculator: View {
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                         })
                         .background(buttonColor(cell))
-                        .clipShape(Circle())
+                        .cornerRadius(buttonCornerRadius)
+                        .padding(.vertical, 7)
                     }
                 }
                 .padding(.horizontal, 10)
@@ -260,7 +261,7 @@ struct RegularCalculator: View {
     }
     
     func buttonTextColor(_ cell: String) -> Color {
-        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%") {
+        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%" || cell == "=" ) {
             return Color(UIColor.darkText)
         }
         
@@ -268,7 +269,7 @@ struct RegularCalculator: View {
     }
     
     func buttonColor(_ cell: String) -> Color {
-        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%") {
+        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%" || cell == "=" ) {
             return .orange
         }
         
