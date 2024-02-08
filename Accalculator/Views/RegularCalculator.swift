@@ -11,21 +11,20 @@ struct RegularCalculator: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    
     let grid = [
         ["AC", "⌦", "%", "÷"],
         ["7", "8", "9", "×"],
         ["4", "5", "6", "-"],
         ["1", "2", "3", "+"],
-        ["0", "()", ".", "="]
+        ["()", "0", ".", "="]
     ]
     
     let landscapeGrids = [
         ["x^2", "x^3", "AC", "⌦", "%", "÷"],
-        ["sinh", "cosh", "7", "8", "9", "×"],
-        ["sin", "cos", "4", "5", "6", "-"],
-        ["tan", "cot", "1", "2", "3", "+"],
-        ["(", ")", "0", "()", ".", "="]
+        ["x^y", "e^x", "7", "8", "9", "×"],
+        ["log", "ln", "4", "5", "6", "-"],
+        ["+/-", "sqrt", "1", "2", "3", "+"],
+        ["(", ")", "()", "0", ".", "="]
     ]
     
     let operators = ["÷", "+", "×", "-"]
@@ -99,14 +98,13 @@ struct RegularCalculator: View {
     let buttonHeight: CGFloat = 50
     let buttonCornerRadius: CGFloat = 20 // Half of width or height for a circle
     
-    
     private var landscapeLayout: some View {
         HStack(spacing: 0) {
             VStack {
                 // current expression
                 HStack {
                     Spacer()
-                    Text(visibleWorkings.isEmpty ? "0" : visibleWorkings.replacingOccurrences(of: " ", with: ""))
+                    Text(visibleWorkings.isEmpty ? "0" : displayInput())
                         .padding()
                         .foregroundColor(Color(UIColor.label))
                         .font(.system(size: 30, weight: .heavy))
@@ -196,13 +194,29 @@ struct RegularCalculator: View {
                 }
                 visibleWorkings = " ( " + visibleWorkings + " ) ** 3"
             }
-        case "sin", "cos", "tan", "cot", "sinh", "cosh":
+        case "x^y":
             if !visibleWorkings.isEmpty {
                 if (!validInput()) {
                     showAlert = true
                     return
                 }
-                visibleWorkings = cell + " ( " + visibleWorkings + " ) "
+                visibleWorkings = " ( " + visibleWorkings + " ) ** "
+            }
+        case "e^x":
+            if !visibleWorkings.isEmpty {
+                if (!validInput()) {
+                    showAlert = true
+                    return
+                }
+                visibleWorkings = " exp ( " + visibleWorkings + " ) "
+            }
+        case "log", "ln", "sqrt":
+            if !visibleWorkings.isEmpty {
+                if (!validInput()) {
+                    showAlert = true
+                    return
+                }
+                visibleWorkings = " " + cell + " ( " + visibleWorkings + " ) "
             }
         default:
             visibleWorkings += cell
@@ -244,6 +258,13 @@ struct RegularCalculator: View {
         }
         
         return Color(UIColor.secondarySystemBackground)
+    }
+    
+    func displayInput() -> String {
+        let workings = visibleWorkings
+            .replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: "exp", with: "e**");
+        return workings
     }
     
     func validInput() -> Bool {
