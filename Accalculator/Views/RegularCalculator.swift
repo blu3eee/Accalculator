@@ -23,7 +23,7 @@ struct RegularCalculator: View {
         ["x^2", "x^3", "AC", "⌦", "%", "÷"],
         ["x^y", "e^x", "7", "8", "9", "×"],
         ["log", "ln", "4", "5", "6", "-"],
-        ["+/-", "sqrt", "1", "2", "3", "+"],
+        ["1/x", "sqrt", "1", "2", "3", "+"],
         ["(", ")", "()", "0", ".", "="]
     ]
     
@@ -125,7 +125,7 @@ struct RegularCalculator: View {
                     HStack {
                         ForEach(row, id: \.self)  {cell in
                             Button(action: {buttonPressed(cell: cell)}, label: {
-                                Text(cell == "AC" ? (visibleWorkings.isEmpty ? cell : "C") : cell)
+                                buttonCellText(cell: cell)
                                     .foregroundColor(buttonTextColor(cell))
                                     .font(.system(size: 22, weight: .medium))
                                     .frame(width: buttonWidth, height: buttonHeight)
@@ -168,7 +168,7 @@ struct RegularCalculator: View {
                     showAlert = true
                     return
                 }
-                visibleWorkings = " ( " + visibleWorkings + " ) ÷ 100"
+                visibleWorkings = "( " + visibleWorkings + " ) ÷ 100"
             }
         case "()":
             if !visibleWorkings.isEmpty {
@@ -176,7 +176,7 @@ struct RegularCalculator: View {
                     showAlert = true
                     return
                 }
-                visibleWorkings = " ( " + visibleWorkings + " ) "
+                visibleWorkings = "( " + visibleWorkings + " ) "
             }
         case "x^2":
             if !visibleWorkings.isEmpty {
@@ -184,7 +184,7 @@ struct RegularCalculator: View {
                     showAlert = true
                     return
                 }
-                visibleWorkings = " ( " + visibleWorkings + " ) ** 2"
+                visibleWorkings = "( " + visibleWorkings + " ) ** 2"
             }
         case "x^3":
             if !visibleWorkings.isEmpty {
@@ -192,7 +192,7 @@ struct RegularCalculator: View {
                     showAlert = true
                     return
                 }
-                visibleWorkings = " ( " + visibleWorkings + " ) ** 3"
+                visibleWorkings = "( " + visibleWorkings + " ) ** 3"
             }
         case "x^y":
             if !visibleWorkings.isEmpty {
@@ -200,7 +200,7 @@ struct RegularCalculator: View {
                     showAlert = true
                     return
                 }
-                visibleWorkings = " ( " + visibleWorkings + " ) ** "
+                visibleWorkings = "( " + visibleWorkings + " ) ** "
             }
         case "e^x":
             if !visibleWorkings.isEmpty {
@@ -208,7 +208,7 @@ struct RegularCalculator: View {
                     showAlert = true
                     return
                 }
-                visibleWorkings = " exp ( " + visibleWorkings + " ) "
+                visibleWorkings = "exp ( " + visibleWorkings + " ) "
             }
         case "log", "ln", "sqrt":
             if !visibleWorkings.isEmpty {
@@ -216,9 +216,24 @@ struct RegularCalculator: View {
                     showAlert = true
                     return
                 }
-                visibleWorkings = " " + cell + " ( " + visibleWorkings + " ) "
+                visibleWorkings = cell + " ( " + visibleWorkings + " ) "
+            }
+        case "(", ")":
+            if !visibleWorkings.isEmpty {
+                visibleWorkings += cell
+            }
+        case "1/x":
+            if !visibleWorkings.isEmpty {
+                if (!validInput()) {
+                    showAlert = true
+                    return
+                }
+                visibleWorkings = "1 / ( " + visibleWorkings + " ) "
             }
         default:
+            if visibleWorkings.replacingOccurrences(of: " ", with: "").last == ")" {
+                visibleWorkings += "*"
+            }
             visibleWorkings += cell
         }
     }
@@ -245,7 +260,7 @@ struct RegularCalculator: View {
     }
     
     func buttonTextColor(_ cell: String) -> Color {
-        if(cell == "AC" || cell == "⌦") {
+        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%") {
             return Color(UIColor.darkText)
         }
         
@@ -253,7 +268,7 @@ struct RegularCalculator: View {
     }
     
     func buttonColor(_ cell: String) -> Color {
-        if(cell == "AC" || cell == "⌦") {
+        if(cell == "AC" || cell == "⌦" || operators.contains(cell) || cell == "%") {
             return .orange
         }
         
@@ -263,8 +278,45 @@ struct RegularCalculator: View {
     func displayInput() -> String {
         let workings = visibleWorkings
             .replacingOccurrences(of: " ", with: "")
-            .replacingOccurrences(of: "exp", with: "e**");
+            .replacingOccurrences(of: "exp", with: "e**")
+            .replacingOccurrences(of: "sqrt", with: "√");
         return workings
+    }
+    
+    // Example function for demonstration
+    func buttonCellText(cell: String) -> some View {
+        let exponents = ["x^2", "x^3", "x^y", "e^x"]
+        
+        if exponents.contains(cell) {
+            // Handle exponent cases
+            if cell == "x^2" {
+                return AnyView(Text("x²"))
+            } else if cell == "x^3" {
+                return AnyView(Text("x³"))
+            } else if cell == "x^y" {
+                // Dynamic exponent, assuming y is provided
+                return AnyView(HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("x")
+                    Text("y")
+                        .font(.footnote)
+                        .baselineOffset(8)
+                })
+            } else if cell == "e^x" {
+                return AnyView(HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("e")
+                    Text("x")
+                        .font(.footnote)
+                        .baselineOffset(8)
+                })
+            }
+        } else if cell == "sqrt" {
+            // Handle AC or C based on `visibleWorkings`
+            return AnyView(Text("√(x)"))
+        } else if cell == "AC" {
+            // Handle AC or C based on `visibleWorkings`
+            return AnyView(Text(visibleWorkings.isEmpty ? "AC" : "C")) // Example color
+        }
+        return AnyView(Text(cell))
     }
     
     func validInput() -> Bool {
@@ -290,6 +342,10 @@ struct RegularCalculator: View {
                     break
                 }
                 if prev == "(" && (character == ")" || operators.contains(String(character))) {
+                    foundInvalidSequence = true
+                    break
+                }
+                if prev == ")" && character.isNumber {
                     foundInvalidSequence = true
                     break
                 }
