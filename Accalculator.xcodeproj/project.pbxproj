@@ -14,6 +14,7 @@
 		3C8F76E62B75857E000EE212 /* Layouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8F76E52B75857E000EE212 /* Layouts.swift */; };
 		3CAFD6312B75C7FC001F8713 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAFD6302B75C7FC001F8713 /* StringExtensions.swift */; };
 		3CAFD6332B75CDE5001F8713 /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAFD6322B75CDE5001F8713 /* DoubleExtensions.swift */; };
+		3CAFD6362B75EB24001F8713 /* MathParser in Frameworks */ = {isa = PBXBuildFile; productRef = 3CAFD6352B75EB24001F8713 /* MathParser */; };
 		3CE7928F2B736004000C55F8 /* AccalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7928E2B736004000C55F8 /* AccalculatorApp.swift */; };
 		3CE792912B736004000C55F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE792902B736004000C55F8 /* ContentView.swift */; };
 		3CE792952B736006000C55F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CE792942B736006000C55F8 /* Assets.xcassets */; };
@@ -75,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CAFD6362B75EB24001F8713 /* MathParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +221,9 @@
 			dependencies = (
 			);
 			name = Accalculator;
+			packageProductDependencies = (
+				3CAFD6352B75EB24001F8713 /* MathParser */,
+			);
 			productName = Accalculator;
 			productReference = 3CE7928B2B736004000C55F8 /* Accalculator.app */;
 			productType = "com.apple.product-type.application";
@@ -291,6 +296,9 @@
 				Base,
 			);
 			mainGroup = 3CE792822B736004000C55F8;
+			packageReferences = (
+				3CAFD6342B75EB24001F8713 /* XCRemoteSwiftPackageReference "DDMathParser" */,
+			);
 			productRefGroup = 3CE7928C2B736004000C55F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -670,6 +678,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3CAFD6342B75EB24001F8713 /* XCRemoteSwiftPackageReference "DDMathParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/davedelong/DDMathParser";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3CAFD6352B75EB24001F8713 /* MathParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3CAFD6342B75EB24001F8713 /* XCRemoteSwiftPackageReference "DDMathParser" */;
+			productName = MathParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3CE792832B736004000C55F8 /* Project object */;
 }
