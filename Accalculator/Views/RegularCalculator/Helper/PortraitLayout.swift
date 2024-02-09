@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct PortraitLayout: View {
-    var visibleWorkings: String;
-    var visibleResults: String;
+    var visibleWorkings: String
+    var visibleResults: String
+    var power: Bool
     var buttonPressed: (String) -> Void
     
     let grid = [
@@ -46,7 +47,12 @@ struct PortraitLayout: View {
             ForEach(grid, id: \.self) { row in
                 HStack {
                     ForEach(row, id: \.self)  {cell in
-                        PadButton(visibleWorkings: visibleWorkings, cell: cell, buttonPressed: buttonPressed)
+                        PadButton(
+                            visibleWorkings: visibleWorkings,
+                            power: power,
+                            cell: cell,
+                            buttonPressed: buttonPressed
+                        )
                     }
                 }
                 .padding(.horizontal, 10)
@@ -58,6 +64,6 @@ struct PortraitLayout: View {
 struct PortraitLayout_Preview : PreviewProvider {
     static func buttonPressed(cell: String) {}
     static var previews: some View {
-        PortraitLayout(visibleWorkings: "1+2", visibleResults: "3", buttonPressed: buttonPressed)
+        PortraitLayout(visibleWorkings: "1+2", visibleResults: "3", power: false, buttonPressed: buttonPressed)
     }
 }

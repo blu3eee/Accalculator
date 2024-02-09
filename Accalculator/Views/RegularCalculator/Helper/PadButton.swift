@@ -12,6 +12,7 @@ struct PadButton: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
     var visibleWorkings: String
+    var power: Bool
     var cell: String
     var buttonPressed: (String) -> Void
     
@@ -36,6 +37,9 @@ struct PadButton: View {
     let orangeCells = ["=","÷", "+", "×", "-", "%"]
     let grayCells = ["⌦","AC"]
     func buttonTextColor(_ cell: String) -> Color {
+        if power && cell == "x^y" {
+            return Color(UIColor.darkText)
+        }
         if (orangeCells.contains(cell) || grayCells.contains(cell)) {
             return Color(UIColor.darkText)
         }
@@ -50,6 +54,9 @@ struct PadButton: View {
     }
     
     func buttonColor(_ cell: String) -> Color {
+        if power && cell == "x^y" {
+            return .gray
+        }
         if(orangeCells.contains(cell)) {
             return .orange
         }

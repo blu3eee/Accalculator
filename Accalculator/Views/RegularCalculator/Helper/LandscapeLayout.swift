@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct LandscapeLayout: View {
-    var visibleWorkings: String;
-    var visibleResults: String;
+    var visibleWorkings: String
+    var visibleResults: String
+    var power: Bool
     var buttonPressed: (String) -> Void
     
     let grids = [
@@ -47,7 +48,12 @@ struct LandscapeLayout: View {
                 ForEach(grids, id: \.self) { row in
                     HStack {
                         ForEach(row, id: \.self)  {cell in
-                            PadButton(visibleWorkings: visibleWorkings, cell: cell, buttonPressed: buttonPressed)
+                            PadButton(
+                                visibleWorkings: visibleWorkings,
+                                power: power,
+                                cell: cell,
+                                buttonPressed: buttonPressed
+                            )
                         }
                     }
                 }
@@ -60,6 +66,6 @@ struct LandscapeLayout: View {
 struct LanscapeLayout_Preview : PreviewProvider {
     static func buttonPressed(cell: String) {}
     static var previews: some View {
-        LandscapeLayout(visibleWorkings: "1+2", visibleResults: "3", buttonPressed: buttonPressed)
+        LandscapeLayout(visibleWorkings: "1+2", visibleResults: "3", power: false, buttonPressed: buttonPressed)
     }
 }
