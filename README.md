@@ -39,6 +39,11 @@ Contributions to Accalculator are always welcome! Whether it's adding new featur
 Accalculator is released under the [MIT License](LICENSE). See the LICENSE file for mo
 
 ---
+## Demo
+![image](https://github.com/bluesimp1102/Accalculator/assets/88558991/68da76a5-4576-4bf0-b177-28211f2526af) ![image](https://github.com/bluesimp1102/Accalculator/assets/88558991/71a8132d-1bdb-4588-8b07-b668f9a5a69a)
+![image](https://github.com/bluesimp1102/Accalculator/assets/88558991/6063066d-ca0c-4211-8972-a2fb444be2df) ![image](https://github.com/bluesimp1102/Accalculator/assets/88558991/a59c867a-83cb-44e8-876e-004e8d05cd2e)
+
+---
 
 ## Project Management Report: Calculator App Development
 
