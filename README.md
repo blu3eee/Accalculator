@@ -58,6 +58,14 @@ The initial time estimation for the project was as follows:
 
 #### February 6-8
 
+The total time spent so far for each phase and in total are as follows:
+
+- **Learning Phase:** ~3.72 hours
+- **Development Phase:** ~9 hours
+- **Testing and Documentation Phase:** ~6.27 hours
+
+This results in a **total time spent of approximately 18.98 hours** on the project so far.
+
 ##### Learning Phase
 
 - **Feb 6, 6:00 PM - 9:43 PM:** Studied Swift and SwiftUI using Apple Developer tutorials and created an example application. Total time: 3 hours 43 minutes.
