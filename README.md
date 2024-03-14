@@ -40,7 +40,7 @@ Accalculator is released under the [MIT License](LICENSE). See the LICENSE file 
 
 ---
 ## Demo
-Regular Calcular |  Metrics Conversion | Tips Calculator
+Regular Calculator |  Metrics Conversion | Tips Calculator
 :-------------------------:|:-------------------------:|:-------------------------:|
 ![image](https://github.com/bluesimp1102/Accalculator/assets/88558991/68da76a5-4576-4bf0-b177-28211f2526af)  | ![image](https://github.com/bluesimp1102/Accalculator/assets/88558991/6063066d-ca0c-4211-8972-a2fb444be2df) | ![image](https://github.com/bluesimp1102/Accalculator/assets/88558991/a59c867a-83cb-44e8-876e-004e8d05cd2e)
  
